@@ -1,0 +1,7 @@
+<div class="center jumbotron">
+  <h1>Welcome to The Book Shop</h1>
+   <%if !logged_in? %>
+  <h1><%= link_to 'Sign Up', new_user_path, class: "btn btn-primary btn-lg" %></h1>
+  <% end %>
+</div>
+

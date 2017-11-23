@@ -1,0 +1,32 @@
+<% obj.each do |book| %>
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="well">
+          <div class="book-image">
+             <%= image_tag(book.image.url, alt: 'Image',size: '120x200') if book.image? %>
+          </div>
+          <div class="book-title">
+            <%=link_to book.name , book_path(book)%>
+          </div>
+
+          <div class="book-body">
+          <div class="book-meta-details">
+            <small> Author: <%= book.author %> <br>
+                    Publisher: <%= book.publisher %>
+            </small>
+          </div>
+          </div>  
+          
+          
+
+          <%if logged_in? && (current_user.admin?) %> 
+          <div class="book-actions">
+          <%= link_to 'Edit', edit_book_path(book), class:"btn btn-sm btn-success" %>
+          <%= link_to 'Destroy', book_path(book), class:"btn btn-sm btn-danger",
+                                method: :delete,data: { confirm: 'Are you sure?' } %>
+          </div>                        
+        </div>
+        <%end%>
+      </div>  
+    </div>  
+  <% end %>

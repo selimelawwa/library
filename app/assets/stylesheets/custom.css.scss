@@ -1,0 +1,26 @@
+$navbar-default-bg: rgb(6, 28, 153);
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.jumbotron h1 {
+    color: rgb(247, 241, 241);
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    font-weight: bold;   
+}
+
+#logo {
+    float: left;
+    font-size: 1.7em;
+    color:rgb(255, 255, 255);
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    font-weight: bold;
+}
+
+.jumbotron {
+    background-image: asset-url('books1.jpeg');
+    background-size: cover;
+}
