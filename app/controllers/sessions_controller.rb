@@ -5,6 +5,8 @@ class SessionsController < ApplicationController
         user = User.find_by(email: params[:session][:email].downcase)
         if user && check_password(params[:session][:password],user.password,user.email)
             session[:user_id] = user.id
+            order1 =  order_session(user) #temp to get order for session
+            session[:order_id] = order1.id
             flash[:success] = "Succesfully Logged In"
             redirect_to root_path
         else 
@@ -16,10 +18,18 @@ class SessionsController < ApplicationController
     
     def destroy
         session[:user_id] = nil
+        session[:order_id] = nil
         flash[:success] = "Succesfully logged out"
         redirect_to root_path
     end
 
+    def order_session(user)
+      if !user.orders.nil?
+        user.orders.last
+      else
+         Order.new
+      end
+    end
 
 
     def check_password(password,password2,email)

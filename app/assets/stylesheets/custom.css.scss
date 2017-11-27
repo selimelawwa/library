@@ -1,5 +1,6 @@
 $navbar-default-bg: rgb(6, 28, 153);
 
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -24,3 +25,31 @@ $navbar-default-bg: rgb(6, 28, 153);
     background-image: asset-url('books1.jpeg');
     background-size: cover;
 }
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+ background-color: rgb(30, 70, 179) ;  /*Sets the background hover color on navbar*/
+}
+// .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >   
+//  a:hover, .navbar-default .navbar-nav > .active > a:focus {
+//   color: blue; /*BACKGROUND color for active*/
+//   background-color: rgb(30, 70, 179) ;
+// }
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: rgb(9, 22, 141);  /*change color of links in drop down here*/
+   }
+//  .nav > li > a:hover,
+//  .nav > li > a:focus {
+//     text-decoration: none;
+//     background-color: silver; /*Change rollover cell color here*/
+//   }
+ .navbar-default .navbar-nav > li > a {
+ color: white; /*Change active text color here*/
+ font-family: sans-serif;
+ font: arial;
+ font-size: 11pt;
+ font-weight: bold;
+ }
+

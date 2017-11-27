@@ -1,5 +1,4 @@
-<% if not obj.nil?%>
- <% obj.each do |book| %>
+<% obj.each do |book| %>
     <div class="row">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="well">
@@ -19,25 +18,15 @@
           </div>  
           
           
-          <%if logged_in?  %> 
+
+          <%if logged_in? && (current_user.admin?) %> 
           <div class="book-actions">
-
-         
-          <%# <%= link_to "Add to Cart", new_order_item_path(product_id: product.id) %>
-          <%= link_to "Add to Cart", order_items_path(book_id: book.id),class:"btn btn-sm btn-info", method: :post %>
-         
-
-          <% if current_user.admin? %>
           <%= link_to 'Edit', edit_book_path(book), class:"btn btn-sm btn-success" %>
           <%= link_to 'Destroy', book_path(book), class:"btn btn-sm btn-danger",
                                 method: :delete,data: { confirm: 'Are you sure?' } %>
-          <% end %>
           </div>                        
         </div>
         <%end%>
       </div>  
     </div>  
   <% end %>
-<% end %>
-
-

@@ -1,13 +1,19 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
-  # GET /books
-  # GET /books.json
   def index
-    if params[:search]
-    @books = Book.where('name LIKE ?', "%#{params[:search]}%")
-    else
     @books = Book.all
+    #@order_item = current_order.order_items.new
+    if params[:search] 
+      if params[:search] == ""
+        @books = nil
+        flash[:danger] = "Search can not be empty"
+      else
+        @books = Book.where('name LIKE ?', "%#{params[:search]}%") | Book.where('author LIKE ?', "%#{params[:search]}%") | Book.where('publisher LIKE ?', "%#{params[:search]}%")
+      end
+      if @books == nil and params[:search] != ""
+         flash[:danger] = "No matches found"
+      end
     end
   end
 

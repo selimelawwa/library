@@ -1,0 +1,24 @@
+
+
+<%= render 'layouts/messages'%>
+<h1>All orders </h1>
+
+<% if not @orders.nil?%>
+   <% @orders.each do |o| %>
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="well">
+          <%= link_to "Order number: #{o.id}", order_path(o.id)%>
+          <div class="book-number">
+            <%=o.order_items.count %>
+          </div>
+          
+
+
+        </div>
+      </div>
+    </div>
+      
+
+  <% end %>
+<% end %>

@@ -1,0 +1,31 @@
+
+
+<%= render 'layouts/messages'%>
+<h1>Order </h1>
+
+
+
+<% if not @order_items.nil?%>
+   <% @order_items.each do |oi| %>
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="well">
+           <% @book = Book.find_by(id: oi.book_id) %>
+           <div class="book-image">
+             <%= image_tag(@book.image.url, alt: 'Image',size: '120x200') if @book.image? %>
+          </div>
+          <div class="book-title">
+            <%=link_to @book.name , book_path(@book)%>
+          </div>
+          <div class="price">
+           <%= @book.price%>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+      
+
+  <% end %>
+<% end %>
