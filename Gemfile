@@ -28,12 +28,15 @@ gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
 gem 'will_paginate', '~> 3.1', '>= 3.1.6'
 
+#Devise gem for authentication
+gem 'devise'
+
 
  #gems for image upload
 #gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave', '~> 1.2', '>= 1.2.1'
-gem 'mini_magick', '~> 4.3'
-
+#gem 'mini_magick', '~> 4.3'
+gem 'mini_magick', '~> 4.8'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

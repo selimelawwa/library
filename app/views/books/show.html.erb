@@ -1,4 +1,37 @@
 <p id="notice"><%= notice %></p>
+    <div class="row">
+     <div class="col-xs-8">
+        <div class="well">
+          <div class="book-image">
+             <%= image_tag(@book.image.url, alt: 'Image',size: '280x400') if @book.image? %>
+          </div>
+          <div class="book-title">
+           <h1> <%= @book.name %> </h1>
+          </div>
+          <div class="book-body">
+          <div class="book-meta-details">
+            <small> Author: <%= @book.author %> <br>
+                    Publisher: <%= @book.publisher %>
+            </small>
+            <p> <h3>Book Overview:</h3> <%= @book.description if @book.description? %></p>
+          </div>
+          </div>            
+          
+          <%if logged_in?  %> 
+          <div class="book-actions">
+          
+        
+          <%= link_to "Add to Cart", order_items_path(book_id: @book.id, quantity: 1, cost: @book.price),class:"btn btn-sm btn-info", method: :post %>
+          <% if current_user.admin? %>
+          <%= link_to 'Edit', edit_book_path(@book), class:"btn btn-sm btn-success" %>
+          <%= link_to 'Destroy', book_path(@book), class:"btn btn-sm btn-danger",
+                                method: :delete,data: { confirm: 'Are you sure?' } %>
+          <% end %>
+          </div>                        
+        </div>
+        <%end%>
+      </div>  
+    </div>
 
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>

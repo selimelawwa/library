@@ -2,19 +2,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   def index
-    @books = Book.all
-    #@order_item = current_order.order_items.new
-    if params[:search] 
-      if params[:search] == ""
-        @books = nil
-        flash[:danger] = "Search can not be empty"
-      else
-        @books = Book.where('name LIKE ?', "%#{params[:search]}%") | Book.where('author LIKE ?', "%#{params[:search]}%") | Book.where('publisher LIKE ?', "%#{params[:search]}%")
-      end
-      if @books == nil and params[:search] != ""
-         flash[:danger] = "No matches found"
-      end
-    end
+    @books = Book.paginate(page: params[:page], per_page:8)
   end
 
   # GET /books/1
@@ -76,6 +64,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:name,:isbn,:author,:category,:language,:publisher,:price,:image,:quantity,:search)
+      params.require(:book).permit(:name,:isbn,:author,:category,:language,:publisher,:price,:image,:quantity,:description)
     end
 end

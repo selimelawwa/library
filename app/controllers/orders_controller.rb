@@ -6,4 +6,11 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order_items = @order.order_items
     end
+    def destroy
+        @order = Order.find(params[:id])
+        @order.destroy
+        session[:order_id] = nil
+            flash[:danger] = "Order successfully deleted"
+            redirect_to orders_path
+    end 
 end

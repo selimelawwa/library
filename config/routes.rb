@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   
  resources :order_items, only: [:create, :update, :destroy]
   
-  resources :orders, only: [:index, :show]
+  resources :orders, only: [:index, :show, :destroy]
 
   root 'welcome#index'
 
-
+ get 'search', to: 'search#index'
   
   
   get 'login', to: 'sessions#new'

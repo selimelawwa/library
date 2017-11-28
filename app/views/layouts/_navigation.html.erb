@@ -34,14 +34,12 @@
         
       </ul>
       
-
       <div class="navbar-form navbar-left">
-          <%= form_tag(books_path, method: :get) do %>
+          <%= form_tag(search_path, method: :get) do %>
           <%= text_field_tag :search, params[:search], class:"input-xs form-control" %>
           <%= submit_tag 'Search', name: nil,class:"btn btn-default btn-md"  %>
           <% end %>
       </div>
-
       
 
         

@@ -6,7 +6,9 @@ class SessionsController < ApplicationController
         if user && check_password(params[:session][:password],user.password,user.email)
             session[:user_id] = user.id
             order1 =  order_session(user) #temp to get order for session
-            session[:order_id] = order1.id
+            if !user.orders.empty?
+              session[:order_id] = order1.id
+            end 
             flash[:success] = "Succesfully Logged In"
             redirect_to root_path
         else 
@@ -24,7 +26,7 @@ class SessionsController < ApplicationController
     end
 
     def order_session(user)
-      if !user.orders.nil?
+      if !user.orders.empty?
         user.orders.last
       else
          Order.new

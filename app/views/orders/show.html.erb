@@ -10,22 +10,25 @@
     <div class="row">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="well">
-           <% @book = Book.find_by(id: oi.book_id) %>
-           <div class="book-image">
-             <%= image_tag(@book.image.url, alt: 'Image',size: '120x200') if @book.image? %>
-          </div>
-          <div class="book-title">
-            <%=link_to @book.name , book_path(@book)%>
-          </div>
-          <div class="price">
-           <%= @book.price%>
-          </div>
-
-
+          <% @book = Book.find_by(id: oi.book_id) %>
+            <div class="book-image">
+              <%= image_tag(@book.image.url, alt: 'Image',size: '120x200') if @book.image? %>
+            </div>
+            <div class="book-title">
+              <%=link_to @book.name , book_path(@book)%>
+            </div>
+            <div class="quantity">
+              <%= oi.quantity%>
+            </div>
+            <div class="price">
+              <%= oi.cost%>
+            </div>
+            <div class="order-item-actions">
+               <%= link_to 'Remove Book', order_item_path(oi), class:"btn btn-sm btn-danger",
+                                method: :delete,data: { confirm: 'Are you sure?' } %>
+            </div>
         </div>
       </div>
     </div>
-      
-
   <% end %>
 <% end %>
