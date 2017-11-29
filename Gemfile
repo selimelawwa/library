@@ -32,6 +32,9 @@ gem 'will_paginate', '~> 3.1', '>= 3.1.6'
 gem 'devise'
 
 
+#cancancan
+gem 'cancancan', '~> 2.1', '>= 2.1.2'
+
  #gems for image upload
 #gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave', '~> 1.2', '>= 1.2.1'
