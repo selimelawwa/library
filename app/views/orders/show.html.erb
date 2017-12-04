@@ -24,8 +24,10 @@
               <%= oi.cost%>
             </div>
             <div class="order-item-actions">
+            <% if can? :destroy, oi %>
                <%= link_to 'Remove Book', order_item_path(oi), class:"btn btn-sm btn-danger",
                                 method: :delete,data: { confirm: 'Are you sure?' } %>
+            <% end %>                    
             </div>
         </div>
       </div>

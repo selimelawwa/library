@@ -44,7 +44,7 @@
           <%= form.label :email  %>
         </div>
         <div class="col-sm-6">
-          <%= form.text_field :email, rows:8, class:"form-control", placeholder:"Enter Email" %>
+          <%= form.email_field :email, rows:8, class:"form-control", placeholder:"Enter Email" %>
         </div>
       </div>
 
@@ -60,7 +60,11 @@
 
      <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
+        <% if @user.id.nil?%>
           <%= form.submit "Sign up", class:"btn btn-default" %>
+        <% else %>
+           <%= form.submit "Update", class:"btn btn-default" %>
+        <% end %>
         </div>      
       </div> 
            

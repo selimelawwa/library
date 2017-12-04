@@ -1,0 +1,49 @@
+<div class="modal" id="shoppingCart" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">My Shopping Cart</h5>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+              <tr>
+                <th>Book Name</th>
+                <th>Unit Price (USD)</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th></th>
+              </tr>
+             
+              <tr>
+                <% if not current_order.order_items.nil?%>
+                <% current_order.order_items.each do |oi| %>
+                <% @book = Book.find_by(id: oi.book_id) %>
+                <td>  <%= "#{@book.name.capitalize}"%> </td>
+                <td>  <%= "#{oi.cost}"%> </td>
+                <td> <%= "#{oi.quantity}"%> </td>
+                <td> <%= "#{oi.total_cost}"%> </td>
+                <td> <%= link_to 'Remove', order_item_path(oi), class:"btn btn-sm btn-danger",
+                                method: :delete,data: { confirm: 'Are you sure?' } %> </td>
+              </tr>
+              <% end %>
+              <% end %>
+              <tr>
+                <td colspan="4">Total</td>
+                <td><%= "#{current_order.total_cost}"%> </td>
+                 
+              </tr>
+                
+            </table>
+
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+

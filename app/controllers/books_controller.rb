@@ -1,6 +1,9 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
+  load_and_authorize_resource
+  skip_authorize_resource :only => :index
+
   def index
     @books = Book.paginate(page: params[:page], per_page:8)
   end
@@ -44,6 +47,10 @@ class BooksController < ApplicationController
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def stock
+    @books = Book.all
   end
 
   # DELETE /books/1

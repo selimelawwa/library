@@ -6,7 +6,10 @@ class SearchController < ApplicationController
           @books = nil
           flash[:danger] = "Search can not be empty"
         else
-          @books = Book.where('name LIKE ?', "%#{params[:search]}%") | Book.where('author LIKE ?', "%#{params[:search]}%") | Book.where('publisher LIKE ?', "%#{params[:search]}%")
+          @books = Book.where('name LIKE ?', "%#{params[:search]}%") | 
+                   Book.where('author LIKE ?', "%#{params[:search]}%") | 
+                   Book.where('publisher LIKE ?', "%#{params[:search]}%") |
+                   Book.where('category LIKE ?', "%#{params[:search]}%")
         end
         if @books == nil and params[:search] != ""
           flash[:danger] = "No matches found"

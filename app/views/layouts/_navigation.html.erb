@@ -16,17 +16,16 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
        
-        <%if logged_in? %>
+        <%if logged_in? && current_user.admin? %>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Tools <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><%= link_to 'View Book stocks', bookstock_path%></li>
+            <li><%= link_to 'Add New Book', new_book_path%></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><%= link_to 'View All Users Orders', allorders_path%></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <li><%= link_to 'View All Users', users_path%></li>
           </ul>
         </li>
         <%end%>
@@ -53,10 +52,6 @@
           <ul class="dropdown-menu">
             <li><%= link_to 'All Books', books_path%></li>
             <li><a href="#">Something else here</a></li>
-             <% if logged_in? && current_user.admin?%>
-            <li role="separator" class="divider"></li>
-            <li><%= link_to 'Add New Book', new_book_path%></li>
-            <% end %>
           </ul>
         </li>
 
@@ -64,12 +59,29 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Your Profile <span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li> <%= link_to 'My Profile', user_path(current_user)%>  </li>
+            <li> <%= link_to 'Edit Profile', edit_user_path(current_user)%>  </li>
+            <li role="separator" class="divider"></li>
             <li> <%= link_to 'My Orders', orders_path%>  </li>
-            <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
             <li><%= link_to 'Log out', logout_path, method: :delete%></li>
           </ul>
         </li>
+
+        <% oi = current_order.order_items %>
+        <% numberofbooks = 0  %>
+        <% oi.each do |oitem| %>
+        <% numberofbooks= numberofbooks + oitem.quantity.to_i %>
+        <% end %>
+    
+
+        <li><a href="#" data-target="#shoppingCart" data-toggle="modal">
+                           <span class="glyphicon glyphicon-shopping-cart"></span>
+                           <span class="badge"> <%= "#{numberofbooks}" %> </span></a>
+        </li>
+
+    
+        
         <%else%>
         <li><%= link_to ' Sign Up', new_user_path%></li>
         <li><%= link_to ' Login', login_path%></li>

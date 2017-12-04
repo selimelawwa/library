@@ -1,4 +1,4 @@
-
+<%= render 'layouts/messages'%>
 <% if not obj.nil?%>
 
 
@@ -23,17 +23,16 @@
           
           <%if logged_in?  %> 
           <div class="book-actions">
-          
-        
           <%= link_to "Add to Cart", order_items_path(book_id: book.id, quantity: 1, cost: book.price),class:"btn btn-sm btn-info", method: :post %>
-          <% if current_user.admin? %>
-          <%= link_to 'Edit', edit_book_path(book), class:"btn btn-sm btn-success" %>
-          <%= link_to 'Destroy', book_path(book), class:"btn btn-sm btn-danger",
+          <% if can? :destroy, @book %>
+            <%= link_to 'Edit', edit_book_path(book), class:"btn btn-sm btn-success" %>
+            <%= link_to 'Destroy', book_path(book), class:"btn btn-sm btn-danger",
                                 method: :delete,data: { confirm: 'Are you sure?' } %>
           <% end %>
-          </div>                        
+          </div>   
+          <%end%>                     
         </div>
-        <%end%>
+        
       </div>  
     <%# </div>   %>
   <% end %>

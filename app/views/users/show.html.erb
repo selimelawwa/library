@@ -1,4 +1,51 @@
+<div class="user-name">
+<%= "#{@user.fname} #{@user.lname}"  %>
+</div>
+<br>
+
+<h4>User details: </h4>
+<div class="user-info">
+  <%= "Email: #{@user.email}" %><br>
+  <%= "Telephone: #{@user.telephone}" %><br>
+  <%= link_to 'Edit details', edit_user_path(@user), class:"link"%>
+</div>
+
+<div class="userbooks">
+ <h3>Order Books: </h3>
+<% if not @user.orders.nil?%>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+ <div class="row">
+ <% @user.orders.each do |o| %>
+    <% o.order_items.each do |oi|%>
+    <% book = oi.book %>
+      <div class="col-xs-3">
+        <div class="well">
+          <div class="book-image">
+             <%= image_tag(book.image.url, alt: 'Image',size: '140x200') if book.image? %>
+          </div>
+          <div class="book-title">
+            <%=link_to book.name , book_path(book)%>
+          </div>
+          <div class="book-body">
+          <div class="book-meta-details">
+            <small> Author: <%= book.author %> <br>
+                    Publisher: <%= book.publisher %>
+            </small>
+          </div>
+          </div>            
+            
+        </div>
+        
+      </div>  
+    <% end   %>
+  <% end %>
+  </div>  
+<% end %>
+
+
+
+</div>
+<div>
+<%= link_to 'Back', users_path, class:"btn btn-md btn-primary" %>
+</div>
