@@ -35,7 +35,7 @@ gem 'devise'
 gem 'yaml_db', '~> 0.6.0'
 
 # gem for mySQL
-#gem 'mysql2'
+#gem 'mysql2', '>= 0.3.18','<0.5'
 
 #cancancan
 gem 'cancancan', '~> 2.1', '>= 2.1.2'
