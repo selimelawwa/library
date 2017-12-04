@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
             if !user.orders.empty?
               session[:order_id] = order1.id
             end 
-            flash[:success] = "Succesfully Logged In"
+           # flash[:success] = "Succesfully Logged In"
             redirect_to root_path
         else 
             flash[:danger] = "Something went wrong "

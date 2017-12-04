@@ -4,10 +4,14 @@
 <br>
 
 <h4>User details: </h4>
-<div class="user-info">
-  <%= "Email: #{@user.email}" %><br>
-  <%= "Telephone: #{@user.telephone}" %><br>
-  <%= link_to 'Edit details', edit_user_path(@user), class:"link"%>
+<div class="row">
+  <div clas="col-xs-3">
+    <div class="well">
+      <h5><%= "Email: #{@user.email}" %><br></h5>
+      <h5><%= "Telephone: #{@user.telephone}" %><br></h5>
+      <%= link_to 'Edit details', edit_user_path(@user), class:"link"%>
+    </div>
+  </div>
 </div>
 
 <div class="userbooks">

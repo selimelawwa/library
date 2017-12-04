@@ -31,6 +31,11 @@ gem 'will_paginate', '~> 3.1', '>= 3.1.6'
 #Devise gem for authentication
 gem 'devise'
 
+#gem to dump data & then restore
+gem 'yaml_db', '~> 0.6.0'
+
+# gem for mySQL
+#gem 'mysql2'
 
 #cancancan
 gem 'cancancan', '~> 2.1', '>= 2.1.2'
