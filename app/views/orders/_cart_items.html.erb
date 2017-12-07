@@ -1,0 +1,48 @@
+<br>
+<% if !current_order.order_items.empty?%>
+
+<table class="table table-striped table-hover ">
+  <thead>
+      <tr>
+        <th>Book Name</th>
+        <th>Unit Price (USD)</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr>
+     
+      <% if not current_order.order_items.nil?%>
+      <% current_order.order_items.each do |oi| %>
+      <% @book = Book.find_by(id: oi.book_id) %>
+      <td>  <%= "#{@book.name.capitalize}"%> </td>
+      <td>  <%= "#{oi.cost}"%> </td>
+      <td> <%= "#{oi.quantity}"%> </td>
+      <td id=<%= oi.id %> > <%= "#{oi.total_cost}"%> </td>
+      <td> <%= link_to 'Remove Book', order_item_path(oi),id: oi.id, class:"btn btn-sm btn-danger",
+                                method: :delete,data: { confirm: 'Are you sure?' },remote: true %></td> 
+    </tr>
+  <% end %>
+  <% end%>  
+
+
+
+  </tbody>
+  <tfoot>
+      <tr>
+        <td colspan="3">Total</td>
+        <td id="carttotalcost"><%= "#{current_order.total_cost}"%> </td>
+      </tr>
+  </tfoot>
+
+</table>
+<% else %>
+<h4> Your cart is empty, <%= link_to "Contiue Shopping", books_path%> </h4>
+<% end %>
+
+
+
+
+
+

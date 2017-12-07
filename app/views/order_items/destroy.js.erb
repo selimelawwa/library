@@ -1,0 +1,16 @@
+
+$("#order_items_template").html("<%= j (render 'orders/order_items') %>");
+
+$(".modal-body").html("<%= j (render 'orders/cart_items')%>");
+
+
+
+ 
+<% oi = current_order.order_items %>
+<% numberofbooks = 0  %>
+<% oi.each do |oitem| %>
+<% numberofbooks= numberofbooks + oitem.quantity.to_i %>
+<% end %>
+
+document.getElementById('cart').innerHTML = <%= "#{numberofbooks}" %>;
+document.getElementById('carttotalcost').innerHTML = <%= "#{current_order.total_cost}"%> ;

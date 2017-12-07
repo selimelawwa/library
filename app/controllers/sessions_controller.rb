@@ -27,7 +27,11 @@ class SessionsController < ApplicationController
 
     def order_session(user)
       if !user.orders.empty?
-        user.orders.last
+        if user.orders.last.cart?
+            user.orders.last
+        else
+            Order.new
+        end
       else
          Order.new
       end

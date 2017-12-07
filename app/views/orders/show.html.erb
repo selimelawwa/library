@@ -1,36 +1,13 @@
 
 
 <%= render 'layouts/messages'%>
-<h1>Order </h1>
 
-
-
-<% if not @order_items.nil?%>
-   <% @order_items.each do |oi| %>
-    <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
-        <div class="well">
-          <% @book = Book.find_by(id: oi.book_id) %>
-            <div class="book-image">
-              <%= image_tag(@book.image.url, alt: 'Image',size: '120x200') if @book.image? %>
-            </div>
-            <div class="book-title">
-              <%=link_to @book.name , book_path(@book)%>
-            </div>
-            <div class="quantity">
-              <%= oi.quantity%>
-            </div>
-            <div class="price">
-              <%= oi.cost%>
-            </div>
-            <div class="order-item-actions">
-            <% if can? :destroy, oi %>
-               <%= link_to 'Remove Book', order_item_path(oi), class:"btn btn-sm btn-danger",
-                                method: :delete,data: { confirm: 'Are you sure?' } %>
-            <% end %>                    
-            </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
+<% if @order.cart? %>
+<h1>Shopping Cart </h1>
+<div  id= "order_items_template"> <%= render 'cart_items'%>  </div>
+<% else %>
+<h1> <%= "Order number: #{@order.id}"%></h1>
+<h5> Date: <%= @order.created_at %> </h5>
+<div  id= "order_items_template"> <%= render 'order_items'%>  </div>
 <% end %>
+

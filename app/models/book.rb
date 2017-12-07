@@ -3,6 +3,7 @@ class Book < ApplicationRecord
 
     has_many :order_items, dependent: :destroy
 
+
     validates :name, presence: true
     validates :isbn, presence: true
     validates :author, presence: true

@@ -1,0 +1,28 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">My Shopping Cart</h5>
+      </div>
+      
+      <div class="modal-body">
+        <%= render 'orders/cart_items' %>
+      </div>
+
+      <div class="modal-footer">
+        <% if !current_order.order_items.empty?%>
+          <button type="button" class="btn btn-md btn-secondary pull-left" data-dismiss="modal">Continue Shopping</button>
+          <%= link_to "Check Out", checkout_path, class:"btn btn-md btn-success"%>
+        <% else %>
+        <button type="button" class="btn btn-md btn-secondary" data-dismiss="modal">Close</button>
+        <% end %>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

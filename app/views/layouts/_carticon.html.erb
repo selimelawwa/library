@@ -1,0 +1,12 @@
+
+
+        <% oi = current_order.order_items %>
+        <% numberofbooks = 0  %>
+        <% oi.each do |oitem| %>
+        <% numberofbooks= numberofbooks + oitem.quantity.to_i %>
+        <% end %>
+
+        <a href="#" data-target="#myModal" data-toggle="modal" >
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+                <span class="badge" id="cart"> <%= "#{numberofbooks}" %> </span>
+        </a>

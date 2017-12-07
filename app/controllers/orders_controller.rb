@@ -17,4 +17,16 @@ class OrdersController < ApplicationController
             flash[:danger] = "Order successfully deleted"
             redirect_to orders_path
     end 
+    
+    def checkout
+    @order = current_order
+    @order.cart = false
+    @order.save
+    @order = Order.new
+    @order.user_id = current_user.id
+    @order.save
+    session[:order_id] = @order.id
+    end
+
+
 end

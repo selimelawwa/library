@@ -1,16 +1,45 @@
 
 
 <%= render 'layouts/messages'%>
-<h1>All orders </h1>
+<h1>Your orders:</h1>
+<br>
+<%if !@orders.empty? %>
+<% @cartorder = @orders.last %>
+<% @oldorders = @orders.where(cart: false) %>
+<% end %>
 
-<% if not @orders.nil?%>
-   <% @orders.each do |o| %>
+<div class="row">
+  <div class="col-xs-8 ">
+    <div class="well">
+      <div>
+        <%= link_to "Shopping Cart", order_path(@cartorder.id)%>
+        <div class="book-number">
+           Number of Items: <%=@cartorder.order_items.count %>
+          </div>
+          <div class="order-actions">
+          <% if can? :destroy, @cartorder %>
+            <%= link_to 'Delete Order', order_path(@cartorder), class:"btn btn-sm btn-danger",
+                                method: :delete,data: { confirm: 'Are you sure?' } %>
+          </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr width="66%" align="left" class="style13">
+
+<h1> Old Orders: </h1> <br>
+
+<% if not @oldorders.nil?%>
+   <% @oldorders.each do |o| %>
     <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
+      <div class="col-xs-8 ">
         <div class="well">
           <%= link_to "Order number: #{o.id}", order_path(o.id)%>
+          
           <div class="book-number">
-            <%=o.order_items.count %>
+           Number of Items: <%=o.order_items.count %>
           </div>
           <div class="order-actions">
           <% if can? :destroy, o %>
@@ -18,12 +47,8 @@
                                 method: :delete,data: { confirm: 'Are you sure?' } %>
           </div>
           <% end %>
-
-
         </div>
       </div>
     </div>
-      
-
   <% end %>
 <% end %>

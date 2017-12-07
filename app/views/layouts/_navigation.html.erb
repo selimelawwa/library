@@ -68,17 +68,10 @@
           </ul>
         </li>
 
-        <% oi = current_order.order_items %>
-        <% numberofbooks = 0  %>
-        <% oi.each do |oitem| %>
-        <% numberofbooks= numberofbooks + oitem.quantity.to_i %>
-        <% end %>
+       
     
 
-        <li><a href="#" data-target="#shoppingCart" data-toggle="modal">
-                           <span class="glyphicon glyphicon-shopping-cart"></span>
-                           <span class="badge"> <%= "#{numberofbooks}" %> </span></a>
-        </li>
+        <li><%= render 'layouts/carticon'%></li>
 
     
         
