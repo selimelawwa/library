@@ -1,0 +1,46 @@
+<% obj.in_groups_of(2, false) do |row_books| %>
+  
+  <tr>
+    <% for book in row_books %>
+     
+      <td>
+        <div class="book-image">
+          <%= image_tag(book.image.url, alt: 'Image',size: '100x145') if book.image? %>
+            <div class="rating">
+            <%if book.rating == 5%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i>
+            <% elsif book.rating == 4%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i>
+            <%elsif book.rating == 3%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i>
+            <%elsif book.rating == 2%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <%elsif book.rating == 1%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <%else%>
+            <i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <% end %>
+            </div>
+        </div>
+
+        <div class="book-title">
+          <%=link_to book.name , book_path(book)%>
+        </div>
+        <div class="book-body">
+          <div class="book-meta-details">
+            <small> Author: <%= book.author %> <br>
+                    Price: $ <%= book.price %>
+            </small>
+          </div>
+        </div>   
+        <% if logged_in?%>        
+        <div class="book-actions">
+          <%= link_to "Add to Cart", order_items_path(book_id: book.id, quantity: 1, cost: book.price),class:"btn btn-sm btn-info", method: :post %> 
+        </div>
+        <% end %>
+        </div> 
+      </td>
+    
+    <% end %>
+  </tr>
+<% end %>

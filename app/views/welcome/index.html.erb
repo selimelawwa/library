@@ -5,3 +5,62 @@
   <% end %>
 </div>
 
+<br><br>
+
+<div class="row">
+  <div class="col-xs-2">
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Categories</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |c| %>
+          <% if !c.books.empty?%>
+          <tr>
+            <td> <%= link_to c.name.capitalize, category_path(c.id) %> </td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+ 
+  <% if !@recomendedbooks.nil?%>
+  <div class="col-xs-10">
+    <h3> Recomended Books </h3>
+    <hr width="80%" align="left" class="style1">
+    <%= render 'book', obj: @recomendedbooks %>
+  </div>
+  <% end %>
+
+  <% if @recomendedbooks.nil?%>
+  <div class="col-xs-10">
+  <% else %>
+  <div class="col-xs-offset-2 col-xs-10">
+  <% end %>
+    <% if !@bestsellers.nil?%>
+    <h3> Best Sellers </h3>
+    <hr width="80%" align="left" class="style1">
+    <%= render 'book', obj: @bestsellers %>
+    <% end %>
+  </div>
+  <br>
+  <div class="col-xs-offset-2 col-xs-10">
+  <% @fictionbooks = @categories.find_by_name(:Fiction).books.order('ordered_times DESC').first(5)%>
+    <% if !@fictionbooks.nil?%>
+    <h3> Top Ficition Books </h3>
+    <hr width="80%" align="left" class="style1">
+    <%= render 'book', obj: @fictionbooks %>
+  <% end %>
+  </div>
+  <br>
+
+
+ </div>
+
+
+

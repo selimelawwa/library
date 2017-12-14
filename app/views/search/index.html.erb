@@ -1,6 +1,24 @@
 <%= render 'layouts/messages'%>
 
-<h2>Search results:</h2>
-<br>
 
- <%= render 'book', obj: @books%>
+<div class="row">
+  <div class="col-xs-2">
+  <% if !@categories.nil?%>
+  <%= render 'categories'%>
+  <% end %>
+  </div>
+
+  <div class="col-xs-10">
+    <h2>Search Results</h2>
+    <hr width="66%" align="left" class="style1">
+  </div>
+
+  <div class="col-xs-10" id="items_grid">
+  
+    <%= render 'book', obj: @books%>
+  
+  </div>
+
+<div>
+
+

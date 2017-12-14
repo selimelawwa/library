@@ -3,6 +3,10 @@ $navbar-default-bg: rgb(6, 28, 153);
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,600);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
 
 .jumbotron h1 {
     color: rgb(247, 241, 241);
@@ -111,3 +115,10 @@ $navbar-default-bg: rgb(6, 28, 153);
 	border: 0;
 	box-shadow: 0 10px 10px -10px #8c8b8b inset;
 }
+
+hr.style1{
+	border-top: 1px solid #8c8b8b;
+}
+
+
+

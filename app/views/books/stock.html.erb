@@ -8,7 +8,7 @@
         <th>Book Name</th>
         <th>Author</th>
         <th>Stock</th>
-        
+        <th>Ordered</th>
         
       </tr>
   </thead>
@@ -18,6 +18,7 @@
     <td><%=link_to "#{b.name.capitalize}" , book_path(b)%></td>
     <td><%="#{b.author}"%></td>
     <td><%="#{b.quantity}"%></td>
+    <td> <%= "#{b.ordered_times}"%> </td>
     <% if can? :destroy, b %>
               
            <td>  <%= link_to 'Edit', edit_book_path(b), class:"btn btn-xs btn-success active" %> |

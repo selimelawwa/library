@@ -1,0 +1,20 @@
+
+
+<h1 align="left"> <%=  @category.name + " Books" %> </h1>
+<hr width="66%" align="left" class="style1">
+ <div align="center">
+ <% if logged_in? and current_user.admin? %>
+<div class="row">
+ <span class="badge">  <%= link_to "Edit Category Name ", edit_category_path(@category) %> </span>
+</div>
+<% end %>
+ <%= will_paginate @category_books%>
+ </div>
+<%= render 'books/book', obj: @category_books%>
+
+ <div align="center">
+ <%= will_paginate @category_books %>
+ </div>
+
+
+

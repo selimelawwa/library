@@ -20,16 +20,38 @@
           <%if logged_in?  %> 
           <div class="book-actions">
           
-        
           <%= link_to "Add to Cart", order_items_path(book_id: @book.id, quantity: 1, cost: @book.price),class:"btn btn-sm btn-info", method: :post %>
+          
           <% if can? :destroy, @book %>
           <%= link_to 'Edit', edit_book_path(@book), class:"btn btn-sm btn-success" %>
           <%= link_to 'Destroy', book_path(@book), class:"btn btn-sm btn-danger",
                                 method: :delete,data: { confirm: 'Are you sure?' } %>
           <% end %>
-          </div>                        
+          </div>  
+          <%end%>
+          <br>
+          <div class="book-rate">
+          <%= form_tag(action: "rate") do %>
+          <fieldset class="rating">
+            <h5>Rate This Book</h5>
+              <div>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              </div>
+              <%= radio_button("book",:rating, "1") %>  
+              <%= radio_button("book",:rating, "2") %>  
+              <%= radio_button("book",:rating, "3") %>  
+              <%= radio_button("book",:rating, "4") %>  
+              <%= radio_button("book",:rating, "5") %> 
+              <%= submit_tag "Rate", class:"btn btn-sm btn-default" %>
+          </fieldset>
+          <% end %>
+         </div>
+
         </div>
-        <%end%>
       </div>  
     </div>
 

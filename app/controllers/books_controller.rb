@@ -40,7 +40,7 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
+        format.html { redirect_to @book }
         format.json { render :show, status: :ok, location: @book }
       else
         format.html { render :edit }
@@ -63,6 +63,28 @@ class BooksController < ApplicationController
     end
   end
 
+  def rate 
+     @book = Book.find(params[:id])
+    @rat =  params[:rating].to_i
+    tot = @book.rating.to_i * @book.raters.to_i
+    numberofraters = @book.raters.to_i + 1 
+    @book.update_attributes(raters: numberofraters)
+    newrating = @book.rating.to_i
+    if @rat > 3
+      if @book.rating.to_i < 5
+      newrating = @book.rating.to_i + 1
+      end
+    else 
+      if @book.rating.to_i > 2
+      newrating = @book.rating.to_i - 1
+      end
+    end
+    #newrating = ((tot + rat) / numberofraters).to_f
+    @book.update_attributes(rating: newrating.to_i)
+    redirect_to @book
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
@@ -71,6 +93,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:name,:isbn,:author,:category,:language,:publisher,:price,:image,:quantity,:description)
+      params.require(:book).permit(:name,:isbn,:author,:category,:language,:publisher,:ordered_times,:price,:image,:quantity,:description,category_ids:[])
     end
 end

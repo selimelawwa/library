@@ -3,16 +3,20 @@
 <%= render 'layouts/messages'%>
 <h1>Your orders:</h1>
 <br>
-<%if !@orders.empty? %>
+<%if !@orders.nil? %>
 <% @cartorder = @orders.last %>
 <% @oldorders = @orders.where(cart: false) %>
 <% end %>
 
+<% if !@cartorder.nil?%>
 <div class="row">
   <div class="col-xs-8 ">
     <div class="well">
+    
       <div>
+       
         <%= link_to "Shopping Cart", order_path(@cartorder.id)%>
+        
         <div class="book-number">
            Number of Items: <%=@cartorder.order_items.count %>
           </div>
@@ -22,16 +26,19 @@
                                 method: :delete,data: { confirm: 'Are you sure?' } %>
           </div>
           <% end %>
+       
       </div>
     </div>
   </div>
 </div>
+<% end %>  
 
 <hr width="66%" align="left" class="style13">
 
-<h1> Old Orders: </h1> <br>
 
-<% if not @oldorders.nil?%>
+
+<% if not @oldorders.empty?%>
+<h1> Old Orders: </h1> <br>
    <% @oldorders.each do |o| %>
     <div class="row">
       <div class="col-xs-8 ">

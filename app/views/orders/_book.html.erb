@@ -1,0 +1,40 @@
+
+<% if !@recomendedbook.nil? %>
+
+      <div align="center">
+        <div class="book-image">
+          <%= image_tag(@recomendedbook.image.url, alt: 'Image',size: '90x130') if @recomendedbook.image? %>
+            <div class="rating">
+            <%if @recomendedbook.rating == 5%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i>
+            <% elsif @recomendedbook.rating == 4%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i>
+            <%elsif @recomendedbook.rating == 3%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i>
+            <%elsif @recomendedbook.rating == 2%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <%elsif @recomendedbook.rating == 1%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <%else%>
+            <i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <% end %>
+            </div>
+        </div>
+        <div class="book-title">
+          <%=link_to @recomendedbook.name , book_path(@recomendedbook)%>
+        </div>
+        <div class="book-body">
+          <div class="book-meta-details">
+            <small> Author: <%= @recomendedbook.author %> <br>
+                    Price: $ <%= @recomendedbook.price %>
+            </small>
+          </div>
+        </div>   
+        <% if logged_in?%>        
+        <div class="book-actions">
+          <%= link_to "Add to Cart", order_items_path(book_id: @recomendedbook.id, quantity: 1, cost: @recomendedbook.price),class:"btn btn-sm btn-info", method: :post %> 
+        </div>
+        <% end %>
+      </div> 
+
+<% end %>

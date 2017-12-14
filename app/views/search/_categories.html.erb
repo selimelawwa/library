@@ -1,0 +1,23 @@
+<% if !@categories.nil?%>
+  <table class="table">
+      <thead>
+        <tr>
+          <th>Categories</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |c| %>
+          <% if !c.books.empty?%>
+          <tr>
+            <td> <%= link_to c.name.capitalize, fetch_items_path(:cat_id => c.id), remote: true  %> </td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+<% end %>
+ 
+
+
+
+ 

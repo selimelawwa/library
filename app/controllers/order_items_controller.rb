@@ -18,7 +18,8 @@ class OrderItemsController < ApplicationController
       @order_item.update_attributes(quantity: quantity, total_cost: totalcost)
       @book = Book.find(params[:book_id])
       updatestock = @book.quantity - params[:quantity].to_i
-      @book.update_attributes(quantity: updatestock)
+      orderedtimes = @book.ordered_times.to_i + params[:quantity].to_i
+      @book.update_attributes(quantity: updatestock, ordered_times: orderedtimes)
        @order.total_cost = @order.total_cost +  (params[:quantity].to_i * params[:cost].to_f)
     else
       totalcost = params[:quantity].to_i * params[:cost].to_f
@@ -26,7 +27,8 @@ class OrderItemsController < ApplicationController
                                                     cost: params[:cost], total_cost: totalcost)
       @book = Book.find(params[:book_id])
       updatestock = @book.quantity - params[:quantity].to_i
-      @book.update_attributes(quantity: updatestock)  
+      orderedtimes = @book.ordered_times.to_i + params[:quantity].to_i
+      @book.update_attributes(quantity: updatestock, ordered_times: orderedtimes)  
        @order.total_cost = @order.total_cost + totalcost                                          
     end
       
@@ -59,7 +61,8 @@ class OrderItemsController < ApplicationController
     @order.save
     @order_item.destroy
     @order_items = @order.order_items
-    @book.update_attributes(quantity: updatestock)
+    orderedtimes = @book.ordered_times.to_i - @order_item.quantity.to_i
+    @book.update_attributes(quantity: updatestock, ordered_times: orderedtimes)
     respond_to do |format|
     #format.html { redirect_to root_path }
     format.js 

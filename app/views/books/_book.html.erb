@@ -9,6 +9,19 @@
         <div class="well">
           <div class="book-image">
              <%= image_tag(book.image.url, alt: 'Image',size: '140x200') if book.image? %>
+            <div class="rating">
+            <%if book.rating == 5%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i>
+            <% elsif book.rating == 4%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i>
+            <%elsif book.rating == 3%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i>
+            <%elsif book.rating == 2%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <%elsif book.rating == 1%>
+            <i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <% end %>
+            </div>
           </div>
           <div class="book-title">
             <%=link_to book.name , book_path(book)%>

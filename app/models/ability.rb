@@ -24,7 +24,7 @@ class Ability
           u == user
         end
         can [:new,:create], User
-        
+        can :show, Category
     
 
       end
