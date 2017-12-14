@@ -16,7 +16,7 @@
       <% if not current_order.order_items.nil?%>
       <% current_order.order_items.each do |oi| %>
       <% @book = Book.find_by(id: oi.book_id) %>
-      <td>  <%= "#{@book.name.capitalize}"%> </td>
+      <td>  <%= link_to "#{@book.name}", book_path(@book)%> </td>
       <td>  <%= "#{oi.cost}"%> </td>
       <td> <%= "#{oi.quantity}"%> 
           <%if oi.quantity > 1%>

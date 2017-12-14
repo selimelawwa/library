@@ -1,30 +1,77 @@
 <%= render 'layouts/messages'%>
 <h1>All system orders </h1>
 
-<% if not @orders.nil?%>
-   <% @orders.each do |o| %>
-    <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
-        <div class="well">
-          <div class= "Order User">
-          Order by user: <%= link_to "#{o.user.fname} #{o.user.lname}",user_path(o.user)%>
+<% @cartorders = @orders.where(cart: true) %>
+<% @oldorders = @orders.where(cart: false) %>
+
+<% if not @cartorders.nil?%>
+  
+  <h4> Users Shopping carts </h4>
+  <table class="table table-striped table-hover ">
+  <thead>
+      <tr>
+        <th>Ordered by</th>
+        <th>Order Number</th>
+        <th>Number of Books</th>
+        <th>Order Date</th>
+        <th></th>
+      </tr>
+  </thead>
+  <tbody>
+  <% @cartorders.each do |co| %>
+  <tr>
+    <td><%= link_to "#{co.user.fname} #{co.user.lname}",user_path(co.user)%> </td>
+    <td><%= link_to "Order number: #{co.id}", order_path(co.id)%></td>
+    <td><% co.created_at%> </td>
+    <td> <% if can? :destroy, co %>
+            <%= link_to 'Delete Order', order_path(co), class:"btn btn-sm btn-danger",
+                                method: :delete,data: { confirm: 'Are you sure?' } %>
           </div>
-          <%= link_to "Order number: #{o.id}", order_path(o.id)%>
-          <div class="book-number">
-            <%=o.order_items.count %>
-          </div>
-          <div class="order-actions">
-          <% if can? :destroy, o %>
+          <% end %>
+    </td>
+    <% end %>
+    </tr>
+  </tbody>
+  </table>
+  
+<% end %>
+
+<% if not @oldorders.nil?%>
+  
+   <h4> Users Old Orders </h4>
+  <table class="table table-striped table-hover ">
+  <thead>
+      <tr>
+        <th>Ordered by</th>
+        <th>Order Number</th>
+        <th>Number of Books</th>
+        <th>Order Date</th>
+        <th></th>
+      </tr>
+  </thead>
+  <tbody>
+  <% @oldorders.each do |o| %>
+  <tr>
+    <td><%= link_to "#{o.user.fname} #{o.user.lname}",user_path(o.user)%> </td>
+    <td><%= link_to "Order number: #{o.id}", order_path(o.id)%></td>
+    <td><% o.created_at%> </td>
+    <td> <% if can? :destroy, o %>
             <%= link_to 'Delete Order', order_path(o), class:"btn btn-sm btn-danger",
                                 method: :delete,data: { confirm: 'Are you sure?' } %>
           </div>
           <% end %>
-
-
-        </div>
-      </div>
-    </div>
-      
-
-  <% end %>
+    </td>
+    </tr>
+    <% end %>
+  </tbody>
+  </table>
+  
 <% end %>
+
+
+
+
+
+
+  
+   

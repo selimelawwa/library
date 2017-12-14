@@ -37,6 +37,12 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    if @user.update(user_params)
+      flash[:success] = "#{@user.username}, your details have been succesfully edited!"
+      redirect_to user_path(@user)
+    else
+      render 'edit'
+  end
     
   end
 
