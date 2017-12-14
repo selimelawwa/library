@@ -48,8 +48,22 @@ class OrderItemsController < ApplicationController
   def update
     @order = current_order
     @order_item = @order.order_items.find(params[:id])
-    @order_item.update_attributes(order_item_params)
-    @order_items = @order.order_items
+    totalcost = @order_item.total_cost + (params[:quantity].to_i * params[:cost].to_f)
+    quantity = @order_item.quantity + params[:quantity].to_i
+    @order_item.update_attributes(quantity: quantity, total_cost: totalcost)
+    @book = Book.find(@order_item.book_id)
+    updatestock = @book.quantity - params[:quantity].to_i
+    orderedtimes = @book.ordered_times.to_i + params[:quantity].to_i
+    
+    @book.update_attributes(quantity: updatestock, ordered_times: orderedtimes)
+    @order.total_cost = @order.total_cost +  (params[:quantity].to_i * params[:cost].to_f)
+    @order.save
+   # @order_item.update_attributes(order_item_params)
+   # @order_items = @order.order_items
+   
+    respond_to do |format|
+    format.js 
+    end
   end
 
   def destroy

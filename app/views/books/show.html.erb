@@ -1,58 +1,109 @@
-<%= render 'layouts/messages'%>
-    <div class="row">
-     <div class="col-xs-8">
-        <div class="well">
-          <div class="book-title">
-           <h1> <%= @book.name %> </h1>
-          </div><br>
-          <div class="book-image">
-             <%= image_tag(@book.image.url, alt: 'Image',size: '280x400') if @book.image? %>
-          </div>
-          <div class="book-body">
-          <div class="book-meta-details">
-            <small> Author: <%= @book.author %> <br>
-                    Publisher: <%= @book.publisher %>
-            </small>
-            <p> <h3>Book Overview:</h3> <%= @book.description if @book.description? %>...</p>
-          </div>
-          </div>            
-          
-          <%if logged_in?  %> 
-          <div class="book-actions">
-          
-          <%= link_to "Add to Cart", order_items_path(book_id: @book.id, quantity: 1, cost: @book.price),class:"btn btn-sm btn-info", method: :post %>
-          
-          <% if can? :destroy, @book %>
-          <%= link_to 'Edit', edit_book_path(@book), class:"btn btn-sm btn-success" %>
-          <%= link_to 'Destroy', book_path(@book), class:"btn btn-sm btn-danger",
-                                method: :delete,data: { confirm: 'Are you sure?' } %>
-          <% end %>
-          </div>  
-          <%end%>
-          <br>
-          <div class="book-rate">
-          <%= form_tag(action: "rate") do %>
-          <fieldset class="rating">
-            <h5>Rate This Book</h5>
-              <div>
-              <i class="active fa fa-star" aria-hidden="true"></i>
-              <i class="active fa fa-star" aria-hidden="true"></i>
-              <i class="active fa fa-star" aria-hidden="true"></i>
-              <i class="active fa fa-star" aria-hidden="true"></i>
-              <i class="active fa fa-star" aria-hidden="true"></i>
-              </div>
-              <%= radio_button("book",:rating, "1") %>  
-              <%= radio_button("book",:rating, "2") %>  
-              <%= radio_button("book",:rating, "3") %>  
-              <%= radio_button("book",:rating, "4") %>  
-              <%= radio_button("book",:rating, "5") %> 
-              <%= submit_tag "Rate", class:"btn btn-sm btn-default" %>
-          </fieldset>
-          <% end %>
-         </div>
 
-        </div>
-      </div>  
+<div class="row">
+  <div class="col-xs-8">
+  <h1><%= @book.name %> </h1>
+  <h3><%= "By #{@book.author}"%></h3>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+  <div class="col-xs-3">
+    <div class="row">
+    <%= image_tag(@book.image.url, alt: 'Image',size: '280x400') if @book.image? %>
     </div>
+    <hr width="100%" align="center" class="style1">
+    <div class="row">
+    <h4> Related Categories </h4>
+    <% @book.categories.each do |c|%>
+      <%= link_to c.name , category_path(c)%>
+      <br>
+    <% end %>
+    </div>
+  </div>
+  
+  <div class="col-xs-offset-1 col-xs-8">
+    <div class="row">
+      <div class="col-xs-3">
+        <i class="fa fa-usd" style="font-size:48px;"> <%= @book.price%>  </i>
+      </div>
+      <div class="col-xs-3">
+        <% if logged_in?%>
+          <%= link_to "Add to Cart", order_items_path(book_id: @book.id, quantity: 1, cost: @book.price),class:"btn btn-lg btn-success", method: :post %>
+        <% end %>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+    <h4> Book Details</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td>  ISBN </td>
+          <td>  <%= "#{@book.isbn}"%> </td>
+        </tr>
+         <tr>
+          <td>  Author </td>
+          <td>  <%= "#{@book.author}"%> </td>
+        </tr>
+         <tr>
+          <td>  Publisher </td>
+          <td>  <%= "#{@book.publisher}"%> </td>
+        </tr>
+         <tr>
+          <td>  Available Quantity </td>
+          <td>  <%= "#{@book.quantity}"%> </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="row">
+    <hr width="100%" align="left" class="style10">
+      <p> <h3>Book Description:</h3> <%= @book.description if @book.description? %></p>
+    </div>
+    
+    <div class="row">
+    <hr width="100%" align="left" class="style10">
+      <%= form_tag(action: "rate") do %>
+        <fieldset class="rating">
+          <h5>Rate This Book</h5>
+            <div>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+              <i class="active fa fa-star" aria-hidden="true"></i>
+            </div>
+            <%= radio_button("book",:rating, "1") %>  
+            <%= radio_button("book",:rating, "2") %>  
+            <%= radio_button("book",:rating, "3") %>  
+            <%= radio_button("book",:rating, "4") %>  
+            <%= radio_button("book",:rating, "5") %> 
+            <%= submit_tag "Rate", class:"btn btn-sm btn-default" %>
+        </fieldset>
+      <% end %>
+      <hr width="100%" align="left" class="style10">
+    </div>
+
+    <div class="row">
+      <h4>Books you might like </h4>
+      <% cat = @book.categories.first %>
+      <% if cat == "Fiction"%>
+        <% if !@book.categories.second.nil?%>
+        <% cat = @book.categories.second%>
+        <% end %>
+      <% end %>
+      <% interestingbook = cat.books.first(5)%>
+      <% interestingbook = interestingbook.without(@book)%>
+      <%= render 'welcome/book', obj: interestingbook%>
+    </div>
+
+  </div>
+
+</div>
+
+
 
 

@@ -18,7 +18,12 @@
       <% @book = Book.find_by(id: oi.book_id) %>
       <td>  <%= "#{@book.name.capitalize}"%> </td>
       <td>  <%= "#{oi.cost}"%> </td>
-      <td> <%= "#{oi.quantity}"%> </td>
+      <td> <%= "#{oi.quantity}"%> 
+          <%if oi.quantity > 1%>
+          <%= link_to '<span class="glyphicon glyphicon-minus  text-danger"></span>'.html_safe, order_item_path(oi,book_id:  @book.id, quantity: -1, cost:  @book.price), method: :put ,remote: true %>
+          <%end %>
+          <%= link_to '<span class="glyphicon glyphicon-plus text-success"></span>'.html_safe, order_item_path(oi,book_id:  @book.id, quantity: 1, cost:  @book.price), method: :put,remote: true %>
+      </td>
       <td id=<%= oi.id %> > <%= "#{oi.total_cost}"%> </td>
       <td> <%= link_to 'Remove Book', order_item_path(oi),id: oi.id, class:"btn btn-sm btn-danger",
                                 method: :delete,data: { confirm: 'Are you sure?' },remote: true %></td> 

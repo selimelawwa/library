@@ -12,15 +12,29 @@ class OrdersController < ApplicationController
     end
     def destroy
         @order = Order.find(params[:id])
-        @order.destroy
-        session[:order_id] = nil
+        if @order.cart?
+          @order.destroy
+          @order = Order.new
+          session[:order_id] = @order.id
+        else 
+          @order.destroy
+        end
+          
             flash[:danger] = "Order successfully deleted"
             redirect_to orders_path
     end 
     
     def checkout
     @order = current_order
-    @recomendedbook = Category.find_by_name(fav_category).books.first(2)
+    @recomendedbook = Category.find_by_name(fav_category).books
+
+    @recomendedbook.each do |rb|
+      if !@order.order_items.find_by_book_id(rb.id).nil?
+        @recomendedbook = @recomendedbook.without(rb)
+      end
+    end
+    @recomendedbook = @recomendedbook.first(2)
+    
 
     @confirmedorder = @order
     if !@order.order_items.empty?
