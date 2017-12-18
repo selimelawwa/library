@@ -15,7 +15,16 @@
   <tbody>
   <% if not @books.nil?%>
   <% @books.each do |b| %>
-    <td><%=link_to "#{b.name.capitalize}" , book_path(b)%></td>
+  
+    <% if b.quantity.to_i < 20 %>
+     <tr class="red">
+     <td><%=link_to "#{b.name.capitalize}" , book_path(b), class:"redlink"%></td>
+    <% else %>
+     <tr>
+     <td><%=link_to "#{b.name.capitalize}" , book_path(b)%></td>
+    <% end %>
+    
+    
     <td><%="#{b.author}"%></td>
     <td><%="#{b.quantity}"%></td>
     <td> <%= "#{b.ordered_times}"%> </td>
@@ -26,7 +35,7 @@
                                 method: :delete,data: { confirm: 'Are you sure?' } %> </td>
     <% end %>
 
-
+     </tr>
   </tbody>
    <% end %>
  <% end %>

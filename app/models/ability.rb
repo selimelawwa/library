@@ -10,17 +10,15 @@ class Ability
       else
         can :create, Order
         can :create, OrderItem
-        can :destroy, Order do |o|
-          o.user == user
-        end 
-        can :read, Order do |o|
+      
+        can [:read,:destroy,:checkout], Order do |o|
           o.user == user
         end 
         can :destroy, OrderItem do |oi|
           oi.order.user == user
         end 
-        can :read, Book
-        can [:edit,:update,:show], User do |u|
+        can [:read,:rate], Book
+        can [:edit,:update,:show,:destroy], User do |u|
           u == user
         end
         can [:new,:create], User

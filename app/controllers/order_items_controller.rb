@@ -13,9 +13,10 @@ class OrderItemsController < ApplicationController
     totalcost=0
     if !@similaritem.nil? #not first orderitem or first order so no need to update session
       @order_item = @similaritem 
-      totalcost = @similaritem.total_cost + (params[:quantity].to_i * params[:cost].to_f)
       quantity = @similaritem.quantity + params[:quantity].to_i
-      @order_item.update_attributes(quantity: quantity, total_cost: totalcost)
+      totalcost = quantity * params[:cost].to_f
+      itemcost = params[:cost].to_f
+      @order_item.update_attributes(cost: itemcost, quantity: quantity, total_cost: totalcost)
       @book = Book.find(params[:book_id])
       updatestock = @book.quantity - params[:quantity].to_i
       orderedtimes = @book.ordered_times.to_i + params[:quantity].to_i

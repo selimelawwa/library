@@ -11,3 +11,8 @@
 <div  id= "order_items_template"> <%= render 'order_items'%>  </div>
 <% end %>
 
+<% if @order.cart?%>
+<div id="cart-control" class="modal-footer">
+<%= render 'cartcontrol'%>
+</div>
+<% end %>

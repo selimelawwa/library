@@ -37,6 +37,15 @@
           <%= form.text_field :telephone, class:"form-control", placeholder:"Enter Telephone", autofocus: true %>
         </div>
       </div>
+
+      <div class="form-group">
+        <div class="col-sm-2 control-label">
+          <%= form.label :address %>
+        </div>
+        <div class="col-sm-6">
+          <%= form.text_field :address, class:"form-control", placeholder:"Enter your address", autofocus: true %>
+        </div>
+      </div>
       
 
       <div class="form-group">
@@ -47,7 +56,7 @@
           <%= form.email_field :email, rows:8, class:"form-control", placeholder:"Enter Email" %>
         </div>
       </div>
-
+      
       <div class="form-group">
         <div class="col-sm-2 control-label">
           <%= form.label :password %>
@@ -56,7 +65,7 @@
           <%= form.password_field :password, rows:8, class:"form-control", placeholder:"Enter password" %>
         </div>
       </div>    
-
+      
 
      <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

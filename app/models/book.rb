@@ -15,7 +15,8 @@ class Book < ApplicationRecord
     validates :publisher, presence: true
     validates :quantity, presence: true
     validates_numericality_of :quantity, :only_integer => true, :greater_than_or_equal_to => 0
-   # validates_numericality_of :rating, :only_integer => true, :greater_than_or_equal_to => 0
+    #validates_numericality_of :rating, :greater_than_or_equal_to => 1
+    validates :categories, presence: true
 
   
 

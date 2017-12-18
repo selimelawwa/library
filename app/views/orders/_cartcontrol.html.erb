@@ -1,0 +1,10 @@
+
+<div align="center">
+<br> <br> <br>
+  <% if !current_order.order_items.empty?%>
+  <%= link_to "Back to Home Page", root_path, class:"btn btn-md btn-primary"%>
+  <%= link_to "Check Out", checkout_path, class:"btn btn-md btn-success"%>
+  <% else %>
+  <%= link_to "Back to Home Page", root_path, class:"btn btn-md btn-primary"%>
+  <% end %>
+</div>

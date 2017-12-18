@@ -10,18 +10,25 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order_items = @order.order_items
     end
+
     def destroy
         @order = Order.find(params[:id])
         if @order.cart?
+          orderitems = @order.order_items
+          orderitems.each do |oi|
+            book = oi.book
+            updatestock = book.quantity.to_i + oi.quantity.to_i
+            orderedtimes = book.ordered_times.to_i - oi.quantity.to_i
+            book.update_attributes(quantity: updatestock, ordered_times: orderedtimes)
+          end
           @order.destroy
           @order = Order.new
           session[:order_id] = @order.id
         else 
           @order.destroy
         end
-          
-            flash[:danger] = "Order successfully deleted"
-            redirect_to orders_path
+        flash[:danger] = "Order successfully deleted"
+        redirect_to orders_path
     end 
     
     def checkout

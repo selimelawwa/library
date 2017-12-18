@@ -1,12 +1,21 @@
-
+<%= render 'layouts/messages'%>
 <h1 align="center">All Books</h1>
 
 <br>
-<%= render 'book', obj: @books%>
+<div class="row">
+  <div class="col-xs-12">
+    <%= render 'book', obj: @books%>
+  </div>
+</div>
 
-<div class="flickr_pagination">
-    <div class="page_info">
-      <%= page_entries_info @books %>
+<br> 
+<div class="row">
+  <div class="col-xs-12">
+    <div class="flickr_pagination">
+      <div class="page_info">
+        <%= page_entries_info @books %>
+      </div>
+      <%= will_paginate @books, :container => false %>
     </div>
-    <%= will_paginate @books, :container => false %>
+  </div>
 </div>

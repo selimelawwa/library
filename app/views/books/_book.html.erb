@@ -1,56 +1,55 @@
-<%= render 'layouts/messages'%>
-<% if not obj.nil?%>
 
+<% if !obj.nil? %>
 
- <div class="row">
- <% obj.each do |book| %>
-    <%# <div class="row"> %>
-      <div class="col-xs-3">
-        <div class="well">
-          <div class="book-image">
-             <%= image_tag(book.image.url, alt: 'Image',size: '140x200') if book.image? %>
+<table class="table">
+<% obj.in_groups_of(4, false) do |row_books| %>
+  
+  <tr>
+    <% for book in row_books %>
+     
+      <td>
+        <div class="book-image">
+          <%= image_tag(book.image.url, alt: 'Image',size: '100x145') if book.image? %>
             <div class="rating">
-            <%if book.rating == 5%>
+            <% br = book.rating.to_i %>
+            <%if br == 5%>
             <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i>
-            <% elsif book.rating == 4%>
+            <% elsif br == 4%>
             <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i>
-            <%elsif book.rating == 3%>
+            <%elsif br == 3%>
             <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i>
-            <%elsif book.rating == 2%>
+            <%elsif br == 2%>
             <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
-            <%elsif book.rating == 1%>
-            <i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i>
+            <%else %>
+            <i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i>
             <% end %>
             </div>
-          </div>
-          <div class="book-title">
-            <%=link_to book.name , book_path(book)%>
-          </div>
-          <div class="book-body">
+        </div>
+
+        <div class="book-title">
+          <%=link_to book.name , book_path(book)%>
+        </div>
+        <div class="book-body">
           <div class="book-meta-details">
             <small> Author: <%= book.author %> <br>
                     Price: $ <%= book.price %>
             </small>
-            
           </div>
-          </div>            
-          
-          <%if logged_in?  %> 
-          <div class="book-actions">
-          <%= link_to "Add to Cart", order_items_path(book_id: book.id, quantity: 1, cost: book.price),class:"btn btn-sm btn-info", method: :post %>
-          <% if can? :destroy, @book %>
-            <%= link_to 'Edit', edit_book_path(book), class:"btn btn-sm btn-success" %>
-            <%= link_to 'Destroy', book_path(book), class:"btn btn-sm btn-danger",
-                                method: :delete,data: { confirm: 'Are you sure?' } %>
-          <% end %>
-          </div>   
-          <%end%>                     
+        </div>   
+        <% if logged_in?%>        
+        <div class="book-actions">
+          <%= link_to "Add to Cart", order_items_path(book_id: book.id, quantity: 1, cost: book.price),class:"btn btn-sm btn-info", method: :post %> 
         </div>
-        
-      </div>  
-    <%# </div>   %>
-  <% end %>
-  </div>  
+        <% end %>
+        </div> 
+      </td>
+    
+    <% end %>
+  </tr>
 <% end %>
+</table>
 
 
+
+
+<% end %>

@@ -1,9 +1,32 @@
 
 
 <%= render 'layouts/messages'%>
-<h1>Your orders:</h1>
-<br>
+
 <%if !@orders.nil? %>
+
+<% if !@orders.empty?%>
+<br>
+<% else %>
+<br>
+<h3> Your cart is empty, <%= link_to "Contiue Shopping", books_path%> </h3>
+<br><br><br><br>
+<div class="row">
+    <div class="col-xs-11">
+      <% toprated = Book.all.select { |m| m.rating == 5 } %>
+       
+      <%if !toprated.nil?%>
+      <% interestingbook = toprated.first(6)%>
+      <% if !interestingbook.empty? %>
+      <h4>Top Rated books </h4>
+      <br>
+      <table class="table">
+      <td> <%= render 'welcome/book', obj: interestingbook%> </td>
+      </table>
+      <% end %>
+      <% end %>
+    </div>
+</div>
+<% end %>
   
   <% @cartorder = @orders.last %>
   <%if !@cartorder.nil?%>
@@ -38,9 +61,10 @@
     </div>
   </div>
 </div>
+<hr width="66%" align="left" class="style13">
 <% end %>  
 
-<hr width="66%" align="left" class="style13">
+
 
 
 

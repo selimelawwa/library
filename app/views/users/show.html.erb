@@ -1,57 +1,41 @@
-<br>
-<div class="user-name">
-<%= "#{@user.fname} #{@user.lname}"  %>
-</div>
-<br>
-
-
-
-<h4>User details: </h4>
+<br><br>
+<h4>Account details: </h4>
+<br><br>
 <div class="row">
-  <div class="col-xs-3">
-    
-      <h5><%= "Email: #{@user.email}" %><br></h5>
-      <h5><%= "Telephone: #{@user.telephone}" %><br></h5>
-      <%= link_to 'Edit details', edit_user_path(@user), class:"link"%>
+  <div class="col-xs-7">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td> <h5>Name: </h5> </td>
+          <td> <h5><%= "#{@user.fname} #{@user.lname}"  %><br></h5> </td>
+        </tr>
+        <tr>
+          <td> <h5>Email: </h5> </td>
+          <td> <h5><%= @user.email %><br></h5> </td>
+        </tr>
+        <tr>
+          <td> <h5>Telephone: </h5> </td>
+          <td> <h5><%= @user.telephone %><br></h5> </td>
+        </tr>
+        <tr>
+          <td> <h5>Address: </h5> </td>
+          <td> <h5><%= @user.address %><br></h5> </td>
+        </tr>
+        
+      </tbody>
+      <tfooter>
+      <tr>
+      <td> <%= link_to 'Edit details', edit_user_path(@user), class:"link"%></td>
+      </tr>
+      </tfooter>
+    </table>
+    <br>
+     <%= link_to 'Delete your account', user_path(@user), class:"link link-danger active",
+                                method: :delete,data: { confirm: 'Are you sure?' } %>
   </div>
 </div>
 
-<div class="userbooks">
- <h3>Order Books: </h3>
-<% if not @user.orders.nil?%>
-
-
- <div class="row">
- <% @user.orders.each do |o| %>
-    <% o.order_items.each do |oi|%>
-    <% book = oi.book %>
-      <div class="col-xs-3">
-        <div class="well">
-          <div class="book-image">
-             <%= image_tag(book.image.url, alt: 'Image',size: '140x200') if book.image? %>
-          </div>
-          <div class="book-title">
-            <%=link_to book.name , book_path(book)%>
-          </div>
-          <div class="book-body">
-          <div class="book-meta-details">
-            <small> Author: <%= book.author %> <br>
-                    Publisher: <%= book.publisher %>
-            </small>
-          </div>
-          </div>            
-            
-        </div>
-        
-      </div>  
-    <% end   %>
-  <% end %>
-  </div>  
-<% end %>
-
-
-
-</div>
+<br> <br>
 <div>
-<%= link_to 'Back', users_path, class:"btn btn-md btn-primary" %>
+<%= link_to 'Back to Home Page', root_path, class:"btn btn-lg btn-primary" %>
 </div>

@@ -29,7 +29,7 @@ class BooksController < ApplicationController
 
     if @book.save
         flash[:success] = "Book added successfully!"
-        redirect_to books_path
+        redirect_to @book
     else 
         render 'new'
     end
@@ -40,6 +40,20 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
+        carts = Order.all.select { |o| o.cart == true }
+        carts.each do |c|
+          orderitems = c.order_items
+           orderitems.each do |oi|
+            if oi.book.id == @book.id
+              oi.cost = @book.price 
+              oldtotalcost = oi.total_cost
+              oi.total_cost = oi.quantity * @book.price
+              c.total_cost = (c.total_cost - oldtotalcost) + oi.total_cost
+              c.save
+              oi.save
+            end
+           end 
+        end 
         format.html { redirect_to @book }
         format.json { render :show, status: :ok, location: @book }
       else
@@ -50,7 +64,7 @@ class BooksController < ApplicationController
   end
 
   def stock
-    @books = Book.all
+    @books = Book.order('quantity ASC').all
   end
 
   # DELETE /books/1
@@ -64,23 +78,15 @@ class BooksController < ApplicationController
   end
 
   def rate 
-     @book = Book.find(params[:id])
-    @rat =  params[:rating].to_i
-    tot = @book.rating.to_i * @book.raters.to_i
+    @book = Book.find(params[:id])
+    rat =  params[:book][:rating].to_i
+    tot = @book.rating.to_f * @book.raters.to_i
     numberofraters = @book.raters.to_i + 1 
-    @book.update_attributes(raters: numberofraters)
-    newrating = @book.rating.to_i
-    if @rat > 3
-      if @book.rating.to_i < 5
-      newrating = @book.rating.to_i + 1
-      end
-    else 
-      if @book.rating.to_i > 2
-      newrating = @book.rating.to_i - 1
-      end
-    end
-    #newrating = ((tot + rat) / numberofraters).to_f
-    @book.update_attributes(rating: newrating.to_i)
+    newrating = (tot + rat) / numberofraters 
+    
+    
+    @book.update_attributes(raters: numberofraters, rating: newrating)
+    #@book.rating = @newrating.to_f
     redirect_to @book
 
   end
@@ -93,6 +99,7 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:name,:isbn,:author,:category,:language,:publisher,:ordered_times,:price,:image,:quantity,:description,category_ids:[])
+      params.require(:book).permit(:name,:isbn,:author,:rating,:category,:language,:publisher,:ordered_times,:price,:image,:quantity,:description,category_ids:[])
     end
+
 end

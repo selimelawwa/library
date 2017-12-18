@@ -4,7 +4,11 @@ class WelcomeController < ApplicationController
      @books = Book.all
      @bestsellers = Book.order('ordered_times DESC').first(5)
      if logged_in?
-     @recomendedbooks = @categories.find_by_name(fav_category).books.first(5)
+      if !fav_category.nil?
+        @recomendedbooks = @categories.find_by_name(fav_category).books.first(5)
+      else
+        @recomendedbooks = nil
+      end
      end
 
   end
@@ -36,8 +40,18 @@ class WelcomeController < ApplicationController
     end
    
     h.delete("Fiction")
+    check = 0
+    h.each do |key, value|
+      if value != 0
+        check = 1
+      end
+    end
     fav = h.max_by{|k,v| v}
+    if check == 1
     fav[0]
+    else 
+      nil
+    end
   end
 
 end

@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     if @user.update(user_params)
-      flash[:success] = "#{@user.username}, your details have been succesfully edited!"
+      #flash[:success] = "#{@user.username}, your details have been succesfully edited!"
       redirect_to user_path(@user)
     else
       render 'edit'
@@ -49,7 +49,10 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    
+    @user.destroy
+     session[:user_id] = nil
+     session[:order_id] = nil
+    redirect_to root_path
   end
 
   private
@@ -60,6 +63,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-       params.require(:user).permit(:username, :fname, :lname, :telephone, :email, :password)
+       params.require(:user).permit(:username, :fname, :address, :lname, :telephone, :email, :password)
     end
+    
 end
